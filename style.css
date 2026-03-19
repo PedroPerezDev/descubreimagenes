@@ -326,7 +326,7 @@ input[type="range"]::-moz-range-thumb {
 #image-container {
   position: relative;
   display: inline-block;
-  height: calc(100dvh - 120px);
+  max-height: calc(100dvh - 120px);
   max-width: 90vw;
   border-radius: var(--radius);
   overflow: hidden;
@@ -337,9 +337,10 @@ input[type="range"]::-moz-range-thumb {
 
 #game-image {
   display: block;
-  height: 100%;
-  width: auto;
+  max-height: calc(100dvh - 120px);
   max-width: 90vw;
+  width: auto;
+  height: auto;
   border-radius: calc(var(--radius) - 4px);
 }
 
@@ -484,7 +485,7 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 480px) {
   .upload-card { padding: 1.75rem 1.25rem; }
   .game-header { padding: 0.55rem 0.85rem; }
-  #image-container { height: calc(100dvh - 130px); }
-  #game-image { max-width: 98vw; }
+  #image-container { max-height: calc(100dvh - 130px); max-width: 98vw; }
+  #game-image { max-height: calc(100dvh - 130px); max-width: 98vw; }
   .deco { font-size: 1.8rem; }
 }
