@@ -86,7 +86,7 @@ function startGame() {
   state.cols = cols;
   state.totalTiles = total;
   state.tilesRemoved = 0;
-  state.numbers = shuffle(Array.from({ length: total }, (_, i) => i + 1));
+  state.numbers = Array.from({ length: total }, (_, i) => i + 1);
 
   document.getElementById('game-image').src = state.imageDataURL;
   document.getElementById('upload-screen').hidden = true;
