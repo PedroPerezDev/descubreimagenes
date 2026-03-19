@@ -1,3 +1,6 @@
+/* Garantizar que [hidden] siempre oculta, independiente de especificidad */
+[hidden] { display: none !important; }
+
 /* ── Variables ── */
 :root {
   --bg: #1a1a2e;
