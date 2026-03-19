@@ -1,5 +1,13 @@
 'use strict';
 
+/* ── Paleta de colores para las fichas ── */
+const TILE_COLORS = [
+  '#FF6B6B', '#FF8E53', '#FFC300', '#F7DC6F',
+  '#2ECC71', '#1ABC9C', '#4ECDC4', '#3498DB',
+  '#9B59B6', '#E91E8C', '#FF6B9D', '#26D0CE',
+  '#F39C12', '#27AE60', '#2980B9', '#8E44AD',
+];
+
 /* ── Estado global ── */
 const state = {
   imageDataURL: null,
@@ -109,6 +117,7 @@ function buildTileGrid() {
     const tile = document.createElement('div');
     tile.className = 'tile';
     tile.textContent = num;
+    tile.style.backgroundColor = TILE_COLORS[Math.floor(Math.random() * TILE_COLORS.length)];
     tile.setAttribute('tabindex', '0');
     tile.setAttribute('role', 'button');
     tile.setAttribute('aria-label', `Ficha ${num}`);
@@ -156,6 +165,23 @@ function updateProgress() {
 
 function showVictory() {
   document.getElementById('victory-overlay').hidden = false;
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  for (let i = 0; i < 60; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.backgroundColor = TILE_COLORS[Math.floor(Math.random() * TILE_COLORS.length)];
+    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    piece.style.animationDelay = (Math.random() * 1.5) + 's';
+    piece.style.width = (8 + Math.random() * 10) + 'px';
+    piece.style.height = (8 + Math.random() * 10) + 'px';
+    container.appendChild(piece);
+  }
 }
 
 /* ── Replay ── */
