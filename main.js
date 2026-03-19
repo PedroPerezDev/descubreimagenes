@@ -99,7 +99,6 @@ function startGame() {
   document.getElementById('game-image').src = state.imageDataURL;
   document.getElementById('upload-screen').hidden = true;
   document.getElementById('game-screen').hidden = false;
-  document.getElementById('victory-overlay').hidden = true;
 
   buildTileGrid();
   updateProgress();
@@ -179,37 +178,10 @@ function revealAll() {
   });
 }
 
-/* ── Victoria ── */
+/* ── Victoria: solo mostrar la imagen, sin overlay ── */
 
 function showVictory() {
-  document.getElementById('victory-overlay').hidden = false;
-  launchConfetti();
-}
-
-function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  container.innerHTML = '';
-  for (let i = 0; i < 60; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.left = Math.random() * 100 + 'vw';
-    piece.style.backgroundColor = TILE_COLORS[Math.floor(Math.random() * TILE_COLORS.length)];
-    piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-    piece.style.animationDelay = (Math.random() * 1.5) + 's';
-    piece.style.width = (8 + Math.random() * 10) + 'px';
-    piece.style.height = (8 + Math.random() * 10) + 'px';
-    container.appendChild(piece);
-  }
-}
-
-/* ── Replay ── */
-
-function replayGame() {
-  document.getElementById('victory-overlay').hidden = true;
-  state.tilesRemoved = 0;
-  state.numbers = shuffle(Array.from({ length: state.totalTiles }, (_, i) => i + 1));
-  buildTileGrid();
-  updateProgress();
+  // La imagen ya es visible, no hace falta hacer nada más.
 }
 
 /* ── Nueva partida ── */
@@ -219,7 +191,6 @@ function resetGame() {
   state.imageWidth = 0;
   state.imageHeight = 0;
   document.getElementById('tile-grid').innerHTML = '';
-  document.getElementById('victory-overlay').hidden = true;
   document.getElementById('game-screen').hidden = true;
   document.getElementById('upload-screen').hidden = false;
   document.getElementById('file-name').textContent = '';
@@ -268,8 +239,6 @@ function init() {
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('new-game-btn').addEventListener('click', resetGame);
   document.getElementById('reveal-all-btn').addEventListener('click', revealAll);
-  document.getElementById('replay-btn').addEventListener('click', replayGame);
-  document.getElementById('victory-new-btn').addEventListener('click', resetGame);
 }
 
 document.addEventListener('DOMContentLoaded', init);
