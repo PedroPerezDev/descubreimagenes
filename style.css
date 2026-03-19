@@ -80,7 +80,16 @@ body {
 }
 .btn-secondary:hover:not(:disabled) { background: #6dddd7; }
 
+.btn-reveal {
+  background: #FFD93D;
+  color: var(--text);
+  box-shadow: 0 5px 0 #E6C200;
+}
+.btn-reveal:hover:not(:disabled) { background: #ffe566; }
+
 .btn-sm { padding: 0.5rem 1.1rem; font-size: 0.9rem; }
+
+.header-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
 /* ── Decoraciones flotantes ── */
 .deco {
@@ -352,10 +361,10 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(0.7rem, 2.2vw, 1.3rem);
+  font-size: clamp(1rem, 3.5vw, 2rem);
   font-weight: 700;
-  color: rgba(255,255,255,0.92);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  color: #fff;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.35), 0 1px 0 rgba(0,0,0,0.2);
   cursor: pointer;
   user-select: none;
   border: 3px solid rgba(255,255,255,0.35);

@@ -161,6 +161,24 @@ function updateProgress() {
   fill.parentElement.setAttribute('aria-valuenow', pct);
 }
 
+/* ── Revelar todas las fichas ── */
+
+function revealAll() {
+  const tiles = document.querySelectorAll('#tile-grid .tile:not(.removing)');
+  tiles.forEach((tile, i) => {
+    setTimeout(() => {
+      tile.classList.add('removing');
+      tile.addEventListener('transitionend', () => {
+        tile.style.visibility = 'hidden';
+        tile.style.pointerEvents = 'none';
+        state.tilesRemoved++;
+        updateProgress();
+        if (state.tilesRemoved === state.totalTiles) showVictory();
+      }, { once: true });
+    }, i * 40);
+  });
+}
+
 /* ── Victoria ── */
 
 function showVictory() {
@@ -249,6 +267,7 @@ function init() {
   setupDragDrop();
   document.getElementById('start-btn').addEventListener('click', startGame);
   document.getElementById('new-game-btn').addEventListener('click', resetGame);
+  document.getElementById('reveal-all-btn').addEventListener('click', revealAll);
   document.getElementById('replay-btn').addEventListener('click', replayGame);
   document.getElementById('victory-new-btn').addEventListener('click', resetGame);
 }
