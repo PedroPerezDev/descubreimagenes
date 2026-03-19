@@ -2,7 +2,7 @@
 
 /* ── Estado global ── */
 const state = {
-  imageObjectURL: null,
+  imageDataURL: null,
   tileCount: 20,
   rows: 0,
   cols: 0,
@@ -76,23 +76,18 @@ function computeGrid(n, w, h) {
 function handleFileSelect(file) {
   if (!file || !file.type.startsWith('image/')) return;
 
-  // Revocar URL anterior si existe
-  if (state.imageObjectURL) {
-    URL.revokeObjectURL(state.imageObjectURL);
-  }
-
-  state.imageObjectURL = URL.createObjectURL(file);
-
-  const fileNameEl = document.getElementById('file-name');
-  fileNameEl.textContent = file.name;
-
-  document.getElementById('start-btn').disabled = false;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    state.imageDataURL = e.target.result;
+    document.getElementById('file-name').textContent = file.name;
+    document.getElementById('start-btn').disabled = false;
+  };
+  reader.readAsDataURL(file);
 }
 
 /* ── Inicio de juego ── */
 
 function startGame() {
-  // Usar Image() auxiliar para obtener dimensiones sin depender del DOM oculto
   const tempImg = new Image();
   tempImg.onload = () => {
     const { naturalWidth: w, naturalHeight: h } = tempImg;
@@ -103,19 +98,17 @@ function startGame() {
     state.totalTiles = total;
     state.tilesRemoved = 0;
 
-    // Números barajados
     state.numbers = shuffle(Array.from({ length: total }, (_, i) => i + 1));
 
-    // Mostrar pantalla de juego antes de construir la rejilla
     document.getElementById('upload-screen').hidden = true;
     document.getElementById('game-screen').hidden = false;
     document.getElementById('victory-overlay').hidden = true;
 
-    document.getElementById('game-image').src = state.imageObjectURL;
+    document.getElementById('game-image').src = state.imageDataURL;
     buildTileGrid();
     updateProgress();
   };
-  tempImg.src = state.imageObjectURL;
+  tempImg.src = state.imageDataURL;
 }
 
 /* ── Construcción de la rejilla ── */
@@ -204,10 +197,7 @@ function replayGame() {
 /* ── Nueva partida: volver a pantalla de carga ── */
 
 function resetGame() {
-  if (state.imageObjectURL) {
-    URL.revokeObjectURL(state.imageObjectURL);
-    state.imageObjectURL = null;
-  }
+  state.imageDataURL = null;
 
   document.getElementById('tile-grid').innerHTML = '';
   document.getElementById('victory-overlay').hidden = true;
