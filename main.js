@@ -131,7 +131,8 @@ function onTileClick(e) {
 
   tile.classList.add('removing');
   tile.addEventListener('transitionend', () => {
-    tile.remove();
+    tile.style.visibility = 'hidden';
+    tile.style.pointerEvents = 'none';
     state.tilesRemoved++;
     updateProgress();
     if (state.tilesRemoved === state.totalTiles) showVictory();
