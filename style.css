@@ -237,8 +237,8 @@ input[type="range"]::-moz-range-thumb {
 #image-container {
   position: relative;
   display: inline-block;
+  height: calc(100dvh - 120px);
   max-width: 90vw;
-  max-height: calc(100dvh - 100px);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
@@ -247,11 +247,9 @@ input[type="range"]::-moz-range-thumb {
 
 #game-image {
   display: block;
-  max-width: 90vw;
-  max-height: calc(100dvh - 100px);
+  height: 100%;
   width: auto;
-  height: auto;
-  object-fit: contain;
+  max-width: 90vw;
   border-radius: var(--radius);
 }
 
@@ -362,6 +360,6 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 480px) {
   .upload-card { padding: 1.75rem 1.25rem; }
   .game-header { padding: 0.65rem 0.85rem; }
-  #image-container,
-  #game-image { max-width: 98vw; max-height: calc(100dvh - 120px); }
+  #image-container { height: calc(100dvh - 140px); }
+  #game-image { max-width: 98vw; }
 }
