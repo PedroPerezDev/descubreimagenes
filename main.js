@@ -92,9 +92,10 @@ function handleFileSelect(file) {
 /* ── Inicio de juego ── */
 
 function startGame() {
-  const img = document.getElementById('game-image');
-  img.onload = () => {
-    const { naturalWidth: w, naturalHeight: h } = img;
+  // Usar Image() auxiliar para obtener dimensiones sin depender del DOM oculto
+  const tempImg = new Image();
+  tempImg.onload = () => {
+    const { naturalWidth: w, naturalHeight: h } = tempImg;
     const { rows, cols, total } = computeGrid(state.tileCount, w, h);
 
     state.rows = rows;
@@ -105,14 +106,16 @@ function startGame() {
     // Números barajados
     state.numbers = shuffle(Array.from({ length: total }, (_, i) => i + 1));
 
-    buildTileGrid();
-    updateProgress();
-
+    // Mostrar pantalla de juego antes de construir la rejilla
     document.getElementById('upload-screen').hidden = true;
     document.getElementById('game-screen').hidden = false;
     document.getElementById('victory-overlay').hidden = true;
+
+    document.getElementById('game-image').src = state.imageObjectURL;
+    buildTileGrid();
+    updateProgress();
   };
-  img.src = state.imageObjectURL;
+  tempImg.src = state.imageObjectURL;
 }
 
 /* ── Construcción de la rejilla ── */
