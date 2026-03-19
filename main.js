@@ -88,9 +88,15 @@ function handleFileSelect(file) {
 /* ── Inicio de juego ── */
 
 function startGame() {
-  const tempImg = new Image();
-  tempImg.onload = () => {
-    const { naturalWidth: w, naturalHeight: h } = tempImg;
+  // Mostrar pantalla de juego antes de asignar src
+  // para que el <img> no esté dentro de un display:none
+  document.getElementById('upload-screen').hidden = true;
+  document.getElementById('game-screen').hidden = false;
+  document.getElementById('victory-overlay').hidden = true;
+
+  const gameImg = document.getElementById('game-image');
+  gameImg.onload = () => {
+    const { naturalWidth: w, naturalHeight: h } = gameImg;
     const { rows, cols, total } = computeGrid(state.tileCount, w, h);
 
     state.rows = rows;
@@ -99,16 +105,10 @@ function startGame() {
     state.tilesRemoved = 0;
 
     state.numbers = shuffle(Array.from({ length: total }, (_, i) => i + 1));
-
-    document.getElementById('upload-screen').hidden = true;
-    document.getElementById('game-screen').hidden = false;
-    document.getElementById('victory-overlay').hidden = true;
-
-    document.getElementById('game-image').src = state.imageDataURL;
     buildTileGrid();
     updateProgress();
   };
-  tempImg.src = state.imageDataURL;
+  gameImg.src = state.imageDataURL;
 }
 
 /* ── Construcción de la rejilla ── */
